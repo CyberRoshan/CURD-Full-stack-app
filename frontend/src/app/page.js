@@ -2,13 +2,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
+import toast, { Toaster } from 'react-hot-toast';
 import 'sweetalert2/src/sweetalert2.scss'
 
 export default function Home() {
 
   let [dataList,setDataList]=useState([])
-
-
   let saveStudent=(event)=>{
     event.preventDefault()
     let uname=event.target.uname.value
@@ -22,6 +21,7 @@ export default function Home() {
     axios.post("http://localhost:8000/website/insert-student",userData)
     .then((res)=>{
       console.log(res.data)
+      toast.success('Data Saved !')
       viewStudent()
     })
     event.target.reset()
@@ -65,6 +65,10 @@ export default function Home() {
   },[])
   return (
     <section className="grid lg:grid-cols-[30%_auto] grid-cols-1 gap-10 p-5">
+    <Toaster
+  position="top-center"
+  reverseOrder={false}
+/>
       <form onSubmit={saveStudent} className="rounded-lg lg:h-[460px] h-full shadow-xl p-5 ">
         <div class="mb-6">
         <label
